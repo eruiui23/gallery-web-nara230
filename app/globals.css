@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui" {
+  themes: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@plugin "daisyui/theme" {
+  name: "black";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+  /* --color-primary: rgb(255, 255, 255); */
+  --color-primary: oklch(1 0 116.01);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+:root,
+[data-theme="dark"] {
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
 }
 
 body {
-  background: var(--background);
+  background: var(--color-base-100);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.nara {
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-weight: 50;
+}
+
+nav li.HomeButton {
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-family: Gotham;
+  font-size: 30px;
+}
+
+nav li {
+  list-style-type: none;
+  color: rgb(255, 255, 255);
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+header a {
+  text-decoration: none;
+  color: white;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  z-index: 1000;
+  transition: all 0.2s;
+  /* background-color: rgba(0, 0, 0, 0.81); */
+  padding : 20px 40px; 
+  /* height: clamp(0px, calc(3200vh*0.0035), 950px);  */
+
+}
+
+header.header-scrolled {
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.963);
+  background-color: rgba(0, 0, 0, 0.81);
+  backdrop-filter: blur(3.0px);
+}
+
+.embla {
+  overflow: hidden;
+  --slide-size: 55%;
+
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  flex: 0 0 var(--slide-size);
+  /* Shows one full slide at a time */
+  min-width: 0;
 }
