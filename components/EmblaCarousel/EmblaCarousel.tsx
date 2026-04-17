@@ -12,24 +12,24 @@ const gothamBold = localfont({
 const galleryData = [
     {
         id: 1,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751959516/DSCF9719_q2qjbk.jpg",
-        alt: "Street photography in Tokyo",
-        title: "Tokyo Drift",
-        category: "Street"
-    },
-    {
-        id: 2,
         src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751960002/DSCF5566_ndu7yj.jpg",
         alt: "Portrait of a person",
         title: "Shadows",
         category: "Portrait"
     },
     {
-        id: 3,
+        id: 2,
         src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751959941/DSCF5988_u4hrb3.png",
         alt: "Portrait of a person",
         title: "Shadows",
         category: "Portrait"
+    },
+    {
+        id: 3,
+        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751959516/DSCF9719_q2qjbk.jpg",
+        alt: "Street photography in Tokyo",
+        title: "Tokyo Drift",
+        category: "Street"
     },
     {
         id: 4,
@@ -74,7 +74,7 @@ export function EmblaCarousel() {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
-            duration: 100,
+            duration: 75,
         },
         [Autoplay({
             delay: delay,
