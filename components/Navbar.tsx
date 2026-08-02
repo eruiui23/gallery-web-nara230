@@ -5,59 +5,87 @@ import localfont from "next/font/local";
 import Link from "next/link";
 
 const gothamBold = localfont({
-    src: "../public/fonts/GothamBold.otf",
+  src: "../public/fonts/GothamBold.otf",
 });
 
 export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 0);
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 0);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    return (
-        <header className={`${gothamBold.className} header-scrolled`}>
-            <nav className="mx-8">
-                <ul className="flex flex-row gap-6">
-                    <li className="HomeButton">
-                        <Link href="/">
-                            <span className="nara">nara</span>230
-                        </Link>
-                    </li>
-                    {/*mobile menu dropdown*/}
-                    <div className="dropdown md:hidden">
-                        <div tabIndex={0} role="button" className="btn btn-ghost rounded-field">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
-                        </div>
-                        <ul
-                            className="menu dropdown-content fixed left-0 top-90 bg-black/90 w-full rounded-none z-[50] p-4 shadow-md text h-50">
-                                <li><Link className="list" href="/">Home</Link></li>
-                                <li><Link className="list" href="/gallery">Gallery</Link></li>
-                                <li><Link className="list" href="/aboutme">About Me</Link></li>
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
-                        </ul>
-                    </div>
+  return (
+    <header className={`${gothamBold.className} header-scrolled`}>
+      <nav className="mx-8 py-4">
+        <ul className="flex flex-row items-center justify-between">
 
-                    {/*desktop dropdown*/}
-                    <div className="hidden md:flex flex-row gap-10 text-center ">
-                        <Link className="list" href="/">Home</Link>
-                        <Link className="list" href="/gallery">Gallery</Link>
-                        <Link className="list" href="/aboutme">About Me</Link>
-                    </div>
+          {/* Brand / Logo */}
+          <li className="HomeButton z-50">
+            <Link href="/" onClick={closeMenu}>
+              <span className="nara">nara</span>230
+            </Link>
+          </li>
 
-                    {/*<div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost rounded-field">Dropdown</div>
-                            <ul
-                              tabIndex="-1"
-                              className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
-                              <li><a>Item 1</a></li>
-                              <li><a>Item 2</a></li>
-                            </ul>
-                          </div>*/}
-                </ul>
-            </nav>
-        </header>
-    );
+          {/* Mobile Hamburger / Close Toggle Button */}
+          <li className="md:hidden z-50">
+            <button
+              onClick={toggleMenu}
+              className="btn btn-ghost btn-circle text-white focus:outline-none"
+              aria-label="Toggle Navigation"
+            >
+              {isOpen ? (
+                /* Close (X) Icon when open */
+                <svg className="inline-block h-6 w-6 stroke-current" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                /* Hamburger Icon when closed */
+                <svg className="inline-block h-6 w-6 stroke-current" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </li>
+
+          {/* Fullscreen Mobile Overlay Menu */}
+          {isOpen && (
+            <div className="fixed inset-0 h-screen w-screen bg-black/95 backdrop-blur-md z-40 flex flex-col items-center justify-center md:hidden">
+              <ul className="flex flex-col items-center gap-10 text-center">
+                <li>
+                  <Link className="list text-3xl font-bold tracking-widest" href="/" onClick={closeMenu}>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link className="list text-3xl font-bold tracking-widest" href="/gallery" onClick={closeMenu}>
+                    Gallery
+                  </Link>
+                </li>
+                <li>
+                  <Link className="list text-3xl font-bold tracking-widest" href="/aboutme" onClick={closeMenu}>
+                    About Me
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {/* Desktop Navigation Links */}
+          <li className="hidden md:flex flex-row gap-10 text-center">
+            <Link className="list" href="/">Home</Link>
+            <Link className="list" href="/gallery">Gallery</Link>
+            <Link className="list" href="/aboutme">About Me</Link>
+          </li>
+
+        </ul>
+      </nav>
+    </header>
+  );
 }
