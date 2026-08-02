@@ -3,6 +3,10 @@ import { EmblaCarousel } from "@/components/EmblaCarousel/EmblaCarousel";
 import Gallery from "./Gallery";
 import Navbar from "@/components/Navbar";
 
+function FavDivider() {
+    return <div className="divider divider-primary divider-start uppercase font-[Arial]"><span className="-mr-2  font-[Gotham]">Fav</span> Fragments</div>
+}
+
 export default function Home() {
   return (
     <div className="flex flex-col gap-5">
@@ -14,8 +18,8 @@ export default function Home() {
 
       </div>
       <div className="flex w-7/8 flex-col m-auto">
-        <div className="divider divider-primary divider-start uppercase font-[Arial]"><span className="-mr-2  font-[Gotham]">Fav</span> Fragments</div>
-        <div></div>
+        <FavDivider />
+        <div>test</div>
       </div>
       <div className="m-96 p-96">
         ini hehe

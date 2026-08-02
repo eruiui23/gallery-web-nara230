@@ -39,7 +39,7 @@ nav li.HomeButton {
   font-size: 30px;
 }
 
-nav li {
+.list {
   list-style-type: none;
   color: rgb(255, 255, 255);
   font-size: 17px;
@@ -78,7 +78,7 @@ header {
   z-index: 1000;
   transition: all 0.2s;
   /* background-color: rgba(0, 0, 0, 0.81); */
-  padding : 20px 40px; 
+  padding : 20px 40px;
   /* height: clamp(0px, calc(3200vh*0.0035), 950px);  */
 
 }

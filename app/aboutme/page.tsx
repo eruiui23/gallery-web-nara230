@@ -1,5 +1,9 @@
 export default function AboutMe() {
-  return (
-    <p>Hello, ini adalah halaman About Me</p>
-  );
+    return (
+        <div>
+            <p className="text-amber-100 text-4xl">
+                Hello, ini adalah halaman About Me
+            </p>
+        </div>
+    );
 }
