@@ -56,20 +56,20 @@ export default function Navbar() {
 
           {/* Fullscreen Mobile Overlay Menu */}
           {isOpen && (
-            <div className="fixed inset-0 h-screen w-screen bg-black/95 backdrop-blur-md z-40 flex flex-col items-center justify-center md:hidden">
+            <div className="fixed inset-0 h-screen w-screen bg-black/80 z-40 flex flex-col items-center justify-center md:hidden" onClick={closeMenu}>
               <ul className="flex flex-col items-center gap-10 text-center">
                 <li>
-                  <Link className="list text-3xl font-bold tracking-widest" href="/" onClick={closeMenu}>
+                  <Link className="list" href="/" onClick={closeMenu}>
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link className="list text-3xl font-bold tracking-widest" href="/gallery" onClick={closeMenu}>
+                  <Link className="list" href="/gallery" onClick={closeMenu}>
                     Gallery
                   </Link>
                 </li>
                 <li>
-                  <Link className="list text-3xl font-bold tracking-widest" href="/aboutme" onClick={closeMenu}>
+                  <Link className="list" href="/aboutme" onClick={closeMenu}>
                     About Me
                   </Link>
                 </li>
