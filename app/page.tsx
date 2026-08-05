@@ -1,5 +1,5 @@
 import { EmblaCarousel } from "@/components/EmblaCarousel/EmblaCarousel";
-import ImageWall from "@/components/ImageWall"
+import ImageWall from "@/components/ImageWall";
 
 function FavDivider() {
     return (
@@ -19,10 +19,8 @@ export default function Home() {
             </div>
             <div className="flex w-7/8 flex-col m-auto">
                 <FavDivider />
-                <ImageWall />
-
             </div>
-            {/*<div className="m-96 p-96">ini marginnya gede banget hehe</div>*/}
+            <ImageWall folderName="Nara230/*" />
         </div>
     );
 }

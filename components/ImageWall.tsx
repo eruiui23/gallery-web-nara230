@@ -5,13 +5,15 @@ type Props = {
     folderName?: string;
 };
 
-export default async function GalleryPage({folderName = "Nara230/Test"}: Props ) {
+export default async function GalleryPage({
+    folderName = "Nara230/Test",
+}: Props) {
     const photos = await getImagesFromFolder(folderName);
 
     return (
-        <main className="w-full min-h-screen bg-black px-4 py-8 md:px-8">
+        <main className="max-w-350 bg-black min-h-screen py-4 px-4 self-center">
             {/* CSS Columns Masonry Grid */}
-            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+            <div className="columns-2 md:columns-3 gap-8 space-y-8">
                 {photos.map((photo: Photo) => (
                     <div
                         key={photo.id}
@@ -22,13 +24,12 @@ export default async function GalleryPage({folderName = "Nara230/Test"}: Props )
                             alt="Gallery Photo"
                             width={photo.width}
                             height={photo.height}
-                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            sizes="(max-width: 768px) 50vw, 33vw"
                             className="w-full h-auto object-cover transition-opacity duration-300 group-hover:opacity-80"
                         />
                     </div>
                 ))}
             </div>
-            <p className="text-black">wowwowow</p>
         </main>
     );
 }
