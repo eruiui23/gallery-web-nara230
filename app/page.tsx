@@ -1,7 +1,5 @@
-import Image from "next/image";
 import { EmblaCarousel } from "@/components/EmblaCarousel/EmblaCarousel";
-import Gallery from "./Gallery";
-import Navbar from "@/components/Navbar";
+import ImageWall from "@/components/ImageWall"
 
 function FavDivider() {
     return (
@@ -21,7 +19,8 @@ export default function Home() {
             </div>
             <div className="flex w-7/8 flex-col m-auto">
                 <FavDivider />
-                <div>test</div>
+                <ImageWall />
+
             </div>
             {/*<div className="m-96 p-96">ini marginnya gede banget hehe</div>*/}
         </div>

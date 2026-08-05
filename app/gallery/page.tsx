@@ -1,9 +1,12 @@
-export default function Gallery() {
-    return (
-        <div className="p-30">
-            <p className="text-amber-100 text-4xl">
-                Hello, ini adalah halaman galerykocak
-            </p>
-        </div>
-    );
+import Image from "next/image";
+import { getImagesFromFolder, Photo } from "@/lib/cloudinary";
+
+export default async function GalleryPage() {
+  const photos = await getImagesFromFolder("Nara230/Test");
+
+  return (
+      <div>
+
+      </div>
+  );
 }
