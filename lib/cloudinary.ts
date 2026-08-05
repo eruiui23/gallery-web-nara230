@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { unstable_cache } from 'next/cache';
 
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -23,10 +22,10 @@ interface CloudinarySearchResult {
   [key: string]: unknown; // Allows other Cloudinary properties without throwing errors
 }
 
-export async function getImagesFromFolder(folderName: string) {
+export async function getImagesFromFolder(folderName: string) : Promise<Photo[]>{
   try {
     const results = await cloudinary.search
-      .expression(`folder:${folderName}/*`)
+      .expression(`folder:"${folderName}"`)
       // Sort by newest uploaded or public_id
       .sort_by('public_id', 'desc')
       // Maximum number of images to return (default: 50, max: 500)
