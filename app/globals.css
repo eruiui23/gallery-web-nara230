@@ -9,7 +9,7 @@
   default: true;
   prefersdark: true;
   color-scheme: dark;
-  /* --color-primary: rgb(255, 255, 255); */
+   /*--color-primary: rgb(255, 255, 255);*/
   --color-primary: oklch(1 0 116.01);
 }
 
