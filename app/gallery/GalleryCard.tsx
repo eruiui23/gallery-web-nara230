@@ -25,25 +25,22 @@ export default function GalleryCard({ title, src }: Props) {
         //     </div>
 
         // </div>
-        <div className="w-full border-t-8 border-x-8 border-white">
-            <div className=" w-full h-full bg-white relative">
+        <div className="w-full bg-white p-2  cursor-pointer group">
+            <div className=" w-full bg-white overflow-hidden">
                 <Image
                     src={src}
                     alt="test"
                     width={1200}
                     height={800}
-                    sizes="33vw"
-                    className=""
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    className="group-hover:scale-110 duration-300 object-cover w-full h-auto"
                 />
 
-                <div className="flex flexrow justify-between thinfont p-1 text-xs sm:text-sm md:text-base xl:text-xl text-black font-medium ">
-                    <div className="">
-                        {title}
-                    </div>
-                    <div className="">
-                        06/25
-                    </div>
-                </div>
+            </div>
+
+            <div className="flex flex-row justify-between thinfont pt-2 px-1 text-xs sm:text-sm md:text-base xl:text-xl text-black font-medium ">
+                <div className="">{title}</div>
+                <div className="">06/25</div>
             </div>
         </div>
     );
