@@ -38,7 +38,7 @@ export default function GalleryCard({ title, src }: Props) {
 
             </div>
 
-            <div className="flex flex-row justify-between thinfont pt-2 px-1 text-xs sm:text-sm md:text-base xl:text-xl text-black font-medium ">
+            <div className="flex flex-row justify-between thinfont pt-2 px-1 text-xs sm:text-sm md:text-base xl:text-xl text-black font-medium group-hover:text-black/80 duration-300 ">
                 <div className="">{title}</div>
                 <div className="">06/25</div>
             </div>
