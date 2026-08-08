@@ -36,11 +36,11 @@ export default function GalleryCard({ title, src }: Props) {
                     className=""
                 />
 
-                <div className="flex flexrow justify-between">
-                    <div className="thinfont p-1 text-xl text-black font-medium ">
+                <div className="flex flexrow justify-between thinfont p-1 text-xs sm:text-sm md:text-base xl:text-xl text-black font-medium ">
+                    <div className="">
                         {title}
                     </div>
-                    <div className="thinfont p-1 text-xl text-black font-medium ">
+                    <div className="">
                         06/25
                     </div>
                 </div>

@@ -6,8 +6,8 @@ export default async function GalleryPage() {
     const photos = await getImagesFromFolder("Nara230/Test");
 
     return (
-        <div className="mt-40 flex justify-center">
-            <div className="w-3/4 grid grid-cols-3 gap-8 justify-items-center">
+        <div className="mt-35 flex justify-center">
+            <div className="max-w-350 px-4 grid grid-cols-2 md:grid-cols-3  gap-8 justify-items-center">
                 <GalleryCard
                     title="classmeet"
                     src="https://res.cloudinary.com/dgvu6ny5a/image/upload/v1773988817/DSCF7425_web_uv4cun.jpg"
