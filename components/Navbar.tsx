@@ -23,7 +23,7 @@ export default function Navbar() {
 
   return (
     <header className={`${gothamBold.className} header-scrolled`}>
-      <nav className="mx-8 py-4">
+      <nav className="mx-8 py-2">
         <ul className="flex flex-row items-center justify-between">
 
           {/* Brand / Logo */}
