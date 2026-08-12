@@ -1,5 +1,7 @@
 "use client";
 
+// TODO : improve the navbar animation using motion
+
 import { useState, useEffect } from "react";
 import localfont from "next/font/local";
 import Link from "next/link";
@@ -23,7 +25,7 @@ export default function Navbar() {
 
   return (
     <header className={`${gothamBold.className} header-scrolled`}>
-      <nav className="mx-8 py-4">
+        <nav className={`mx-8 duration-300 ${scrolled ? 'py-0' : 'py-4'}`}>
         <ul className="flex flex-row items-center justify-between">
 
           {/* Brand / Logo */}
