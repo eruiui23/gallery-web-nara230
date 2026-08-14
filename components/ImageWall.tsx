@@ -11,7 +11,7 @@ export default async function GalleryPage({
     const photos = await getImagesFromFolder(folderName);
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center mx-4">
             <GalleryGrid photos={photos} />
         </div>
     );
