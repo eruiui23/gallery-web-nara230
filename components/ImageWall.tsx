@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getImagesFromFolder, Photo } from "@/lib/cloudinary";
 import ImageContainer from "./ImageContainer";
 

@@ -9,7 +9,6 @@ export default function ImageContainer({photo}: Props) {
     return (
         <div>
             <div
-                key={photo.id}
                 className="break-inside-avoid bg-neutral-900 group cursor-pointer"
             >
                 <Image
