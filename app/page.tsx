@@ -20,7 +20,7 @@ export default function Home() {
             <div className="flex w-7/8 flex-col m-auto">
                 <FavDivider />
             </div>
-            <ImageWall folderName="Nara230/*" />
+            <ImageWall folderName="Nara230/Gallery/Uprak" />
         </div>
     );
 }

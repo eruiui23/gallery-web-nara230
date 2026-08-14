@@ -41,7 +41,7 @@ export async function getImagesFromFolder(folderName: string) : Promise<Photo[]>
       format: file.format,
     }));
 
-    return photos;
+    return photos.reverse();
   } catch (error) {
     console.error('Error fetching images:', error);
     return [];
