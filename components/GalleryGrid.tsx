@@ -1,10 +1,15 @@
 "use client";
 
-import { Photo } from "@/lib/cloudinary";
+import { useState, useEffect } from "react";
+import { Photo, getImagesFromFolder } from "@/lib/cloudinary";
 import ImageContainer from "./ImageContainer";
+import { useInView } from "react-intersection-observer";
 
 type Props = {
-    photos: Photo[];
+    // photos: Photo[];
+    initialPhotos: Photo[];
+    initialCursor?: string;
+    folderName: string;
 };
 
 // Image ordering algorithm
@@ -19,7 +24,37 @@ function getBalancedColumns(photos: Photo[], numCols: number): Photo[][] {
     return columns;
 }
 
-export default function GalleryGrid({ photos }: Props) {
+export default function GalleryGrid({ initialPhotos, initialCursor, folderName }: Props) {
+    const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
+    const [cursor, setCursor] = useState<string | undefined>(initialCursor);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { ref, inView } = useInView();
+
+    useEffect(() => {
+            async function loadMorePhotos() {
+                if (isLoading || !cursor) return;
+
+                setIsLoading(true);
+
+                try {
+                    const res = await getImagesFromFolder(folderName, cursor);
+
+                    setPhotos((prev) => [...prev, ...res.photos]);
+
+                    setCursor(res.next_cursor);
+                } catch (error) {
+                    console.error("Error loading more photos:", error);
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+
+            if (inView && cursor) {
+                loadMorePhotos();
+            }
+        }, [inView, cursor, isLoading]);
+
     const mobileCol = getBalancedColumns(photos, 2);
     const desktopCol = getBalancedColumns(photos, 3);
 
@@ -40,13 +75,26 @@ export default function GalleryGrid({ photos }: Props) {
 
             <div className="hidden md:flex gap-10">
                 {desktopCol.map((bucket, bucketIdx) => (
-                    <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
+                    <div
+                        key={bucketIdx}
+                        className="flex-1 flex flex-col gap-10"
+                    >
                         {bucket.map((photo) => (
-                            <ImageContainer photo={photo} key={photo.id}/>
+                            <ImageContainer photo={photo} key={photo.id} />
                         ))}
                     </div>
                 ))}
             </div>
+            {cursor && (
+                            <div ref={ref} className="w-full py-10 flex justify-center items-center mt-10">
+                                {/* You can replace this text with a spinner or a colored placeholder later! */}
+                                {isLoading ? (
+                                    <div className="text-neutral-400 font-medium">Loading more...</div>
+                                ) : (
+                                    <div className="h-10"></div>
+                                )}
+                            </div>
+                        )}
         </main>
     );
 }

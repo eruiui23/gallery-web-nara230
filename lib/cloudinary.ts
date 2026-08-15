@@ -1,3 +1,4 @@
+"use server"
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
@@ -32,7 +33,7 @@ export async function getImagesFromFolder(folderName: string, cursor?: string) :
     let query = cloudinary.search
       .expression(`folder:"${folderName}"`)
       .sort_by('public_id', 'asc')
-      .max_results(27)
+      .max_results(21)
 
       if (cursor) {
           query = query.next_cursor(cursor)
@@ -46,12 +47,11 @@ export async function getImagesFromFolder(folderName: string, cursor?: string) :
       src: file.secure_url,
       width: file.width,
       height: file.height,
-      format: file.format,
     }));
 
     return {
         photos: photos,
-        next_cursor: results.cursor
+        next_cursor: results.next_cursor
 
     }
   } catch (error) {
@@ -59,27 +59,3 @@ export async function getImagesFromFolder(folderName: string, cursor?: string) :
     return { photos: []};
   }
 }
-
-// export const getGalleryPhotos = unstable_cache(
-//   async (): Promise<Photo[]> => {
-//     try {
-//       const results = await cloudinary.search
-//         .expression('folder:/Nara230')
-//         .sort_by('public_id', 'desc')
-//         .max_results(100)
-//         .execute();
-
-//       return results.resources.map((file: CloudinarySearchResult) => ({
-//         id: file.public_id,
-//         src: file.secure_url,
-//         width: file.width,
-//         height: file.height,
-//       }));
-//     } catch (error: unknown) {
-//       console.error('Error fetching Cloudinary images:', error);
-//       return [];
-//     }
-//   },
-//   ['cloudinary-gallery-photos'],
-//   { revalidate: 86400 }
-// );
