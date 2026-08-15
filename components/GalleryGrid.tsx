@@ -27,7 +27,11 @@ function getBalancedColumns(photos: Photo[], numCols: number): Photo[][] {
     return columns;
 }
 
-export default function GalleryGrid({ initialPhotos, initialCursor, folderName }: Props) {
+export default function GalleryGrid({
+    initialPhotos,
+    initialCursor,
+    folderName,
+}: Props) {
     const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
     const [cursor, setCursor] = useState<string | undefined>(initialCursor);
     const [isLoading, setIsLoading] = useState(false);
@@ -35,28 +39,28 @@ export default function GalleryGrid({ initialPhotos, initialCursor, folderName }
     const { ref, inView } = useInView();
 
     useEffect(() => {
-            async function loadMorePhotos() {
-                if (isLoading || !cursor) return;
+        async function loadMorePhotos() {
+            if (isLoading || !cursor) return;
 
-                setIsLoading(true);
+            setIsLoading(true);
 
-                try {
-                    const res = await getImagesFromFolder(folderName, cursor);
+            try {
+                const res = await getImagesFromFolder(folderName, cursor);
 
-                    setPhotos((prev) => [...prev, ...res.photos]);
+                setPhotos((prev) => [...prev, ...res.photos]);
 
-                    setCursor(res.next_cursor);
-                } catch (error) {
-                    console.error("Error loading more photos:", error);
-                } finally {
-                    setIsLoading(false);
-                }
+                setCursor(res.next_cursor);
+            } catch (error) {
+                console.error("Error loading more photos:", error);
+            } finally {
+                setIsLoading(false);
             }
+        }
 
-            if (inView && cursor) {
-                loadMorePhotos();
-            }
-        }, [inView, cursor, isLoading]);
+        if (inView && cursor) {
+            loadMorePhotos();
+        }
+    }, [inView, cursor, isLoading]);
 
     const mobileCol = getBalancedColumns(photos, 2);
     const desktopCol = getBalancedColumns(photos, 3);
@@ -89,15 +93,21 @@ export default function GalleryGrid({ initialPhotos, initialCursor, folderName }
                 ))}
             </div>
             {cursor && (
-                            <div ref={ref} className="w-full py-10 flex justify-center items-center mt-10">
-                                {/* You can replace this text with a spinner or a colored placeholder later! */}
-                                {isLoading ? (
-                                    <div className="text-neutral-400 font-medium">Loading more...</div>
-                                ) : (
-                                    <div className="h-10"></div>
-                                )}
-                            </div>
-                        )}
+                <div
+                    ref={ref}
+                    className="w-full py-10 flex justify-center items-center mt-10"
+                >
+                    {/* You can replace this text with a spinner or a colored placeholder later! */}
+                    {isLoading ? (
+                        <div className="flex flex-row justify-center gap-3.5 items-center">
+                            <span className="loading loading-ring loading-xl"></span>
+                            <div className="list">Loading...</div>
+                        </div>
+                    ) : (
+                        <div className="h-10"></div>
+                    )}
+                </div>
+            )}
         </main>
     );
 }
