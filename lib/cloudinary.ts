@@ -22,15 +22,23 @@ interface CloudinarySearchResult {
   [key: string]: unknown; // Allows other Cloudinary properties without throwing errors
 }
 
-export async function getImagesFromFolder(folderName: string) : Promise<Photo[]>{
+interface CloudinaryResponse {
+   photos: Photo[]
+   next_cursor?: string
+}
+
+export async function getImagesFromFolder(folderName: string, cursor?: string) : Promise<CloudinaryResponse>{
   try {
-    const results = await cloudinary.search
+    let query = cloudinary.search
       .expression(`folder:"${folderName}"`)
-      // Sort by newest uploaded or public_id
-      .sort_by('public_id', 'desc')
-      // Maximum number of images to return (default: 50, max: 500)
-      .max_results(100)
-      .execute();
+      .sort_by('public_id', 'asc')
+      .max_results(27)
+
+      if (cursor) {
+          query = query.next_cursor(cursor)
+        }
+
+        const results = await query.execute()
 
     // Mapping the results into a clean array
     const photos = results.resources.map((file : CloudinarySearchResult) => ({
@@ -41,10 +49,14 @@ export async function getImagesFromFolder(folderName: string) : Promise<Photo[]>
       format: file.format,
     }));
 
-    return photos.reverse();
+    return {
+        photos: photos,
+        next_cursor: results.cursor
+
+    }
   } catch (error) {
     console.error('Error fetching images:', error);
-    return [];
+    return { photos: []};
   }
 }
 
