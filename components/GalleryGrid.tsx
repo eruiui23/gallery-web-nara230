@@ -15,10 +15,13 @@ type Props = {
 // Image ordering algorithm
 function getBalancedColumns(photos: Photo[], numCols: number): Photo[][] {
     const columns: Photo[][] = Array.from({ length: numCols }, () => []);
+    const colHeights: number[] = new Array(numCols).fill(0);
 
-    photos.forEach((photo, index) => {
-        const colIndex = index % numCols;
-        columns[colIndex].push(photo);
+    photos.forEach((photo) => {
+        const imageRatio = photo.height / photo.width;
+        const shortestColIndex = colHeights.indexOf(Math.min(...colHeights));
+        columns[shortestColIndex].push(photo);
+        colHeights[shortestColIndex] += imageRatio;
     });
 
     return columns;
