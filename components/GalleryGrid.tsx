@@ -74,7 +74,12 @@ export default function GalleryGrid({
                         className="flex-1 flex flex-col gap-10"
                     >
                         {bucket.map((photo) => (
-                            <ImageContainer photo={photo} key={photo.id} />
+                            <ImageContainer
+                                photo={photo}
+                                key={photo.id}
+                                index={bucketIdx}
+                                preload={bucketIdx < 2}
+                            />
                         ))}
                     </div>
                 ))}
@@ -87,7 +92,12 @@ export default function GalleryGrid({
                         className="flex-1 flex flex-col gap-10"
                     >
                         {bucket.map((photo) => (
-                            <ImageContainer photo={photo} key={photo.id} />
+                            <ImageContainer
+                                photo={photo}
+                                key={photo.id}
+                                index={bucketIdx}
+                                preload={bucketIdx < 2}
+                            />
                         ))}
                     </div>
                 ))}
