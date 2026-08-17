@@ -77,7 +77,6 @@ export default function GalleryGrid({
                             <ImageContainer
                                 photo={photo}
                                 key={photo.id}
-                                index={bucketIdx}
                                 preload={bucketIdx < 2}
                             />
                         ))}
@@ -95,7 +94,6 @@ export default function GalleryGrid({
                             <ImageContainer
                                 photo={photo}
                                 key={photo.id}
-                                index={bucketIdx}
                                 preload={bucketIdx < 2}
                             />
                         ))}

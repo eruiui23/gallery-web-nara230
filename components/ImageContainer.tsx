@@ -5,11 +5,10 @@ import { useState } from "react";
 
 type Props = {
     photo: Photo;
-    index: number;
     preload?: boolean;
 };
 
-export default function ImageContainer({ photo, index, preload = false }: Props) {
+export default function ImageContainer({ photo, preload = false }: Props) {
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -32,9 +31,6 @@ export default function ImageContainer({ photo, index, preload = false }: Props)
                                     group-hover:scale-105
                                     ${isLoading ? "opacity-0 blur-sm" : "opacity-100 blur-0"}
                                 `}
-                style={{
-                                    transitionDelay: `${index * 150}ms` // 150ms stagger per image
-                                }}
                 onLoad={() => setIsLoading(false)}
             />
         </div>

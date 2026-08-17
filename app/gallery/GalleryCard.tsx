@@ -15,7 +15,7 @@ export default function GalleryCard({ title, src }: Props) {
                     width={1200}
                     height={800}
                     sizes="(max-width: 768px) 50vw, 33vw"
-                    className="group-hover:scale-110 duration-300 object-cover w-full h-auto"
+                    className="group-hover:scale-110 duration-300 object-cover"
                 />
 
             </div>
