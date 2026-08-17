@@ -98,7 +98,7 @@ header {
 }
 
 header.header-scrolled {
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.963);
+
   background-color: rgba(0, 0, 0, 0.81);
   backdrop-filter: blur(3.0px);
 }
