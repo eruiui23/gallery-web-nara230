@@ -1,5 +1,6 @@
-"use server"
-import { v2 as cloudinary } from 'cloudinary';
+"use server";
+import { v2 as cloudinary } from "cloudinary";
+import { getPlaiceholder } from "plaiceholder";
 
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -12,6 +13,7 @@ export interface Photo {
   src: string;
   width: number;
   height: number;
+  color: string;
 }
 
 // Interface representing the shape of an asset returned by Cloudinary's Search API
@@ -24,38 +26,49 @@ interface CloudinarySearchResult {
 }
 
 interface CloudinaryResponse {
-   photos: Photo[]
-   next_cursor?: string
+  photos: Photo[];
+  next_cursor?: string;
 }
 
-export async function getImagesFromFolder(folderName: string, cursor?: string) : Promise<CloudinaryResponse>{
+export async function getImagesFromFolder(
+  folderName: string,
+  cursor?: string,
+): Promise<CloudinaryResponse> {
   try {
     let query = cloudinary.search
       .expression(`folder:"${folderName}"`)
-      .sort_by('public_id', 'asc')
-      .max_results(25)
+      .sort_by("public_id", "asc")
+      .max_results(25);
 
-      if (cursor) {
-          query = query.next_cursor(cursor)
-        }
+    if (cursor) {
+      query = query.next_cursor(cursor);
+    }
 
-        const results = await query.execute()
+    const results = await query.execute();
 
-    // Mapping the results into a clean array
-    const photos = results.resources.map((file : CloudinarySearchResult) => ({
-      id: file.public_id,
-      src: file.secure_url,
-      width: file.width,
-      height: file.height,
+    const photos = await Promise.all(results.resources.map(async (file: CloudinarySearchResult) => {
+        const tinyImageUrl = file.secure_url.replace("/upload/", "/upload/w_10/");
+
+        const response = await fetch(tinyImageUrl);
+        const buffer = Buffer.from(await response.arrayBuffer());
+
+        const { color } = await getPlaiceholder(buffer);
+
+        return {
+            id: file.public_id,
+            src: file.secure_url, // <--- Still send the original high-res URL to the browser
+            width: file.width,
+            height: file.height,
+            color: color.hex,
+        };
     }));
 
     return {
-        photos: photos,
-        next_cursor: results.next_cursor
-
-    }
+      photos: photos,
+      next_cursor: results.next_cursor,
+    };
   } catch (error) {
-    console.error('Error fetching images:', error);
-    return { photos: []};
+    console.error("Error fetching images:", error);
+    return { photos: [] };
   }
 }

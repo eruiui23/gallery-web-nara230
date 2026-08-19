@@ -14,7 +14,10 @@ export default function ImageContainer({ photo, preload = false }: Props) {
 
     return (
         <div
-            style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
+        style={{
+          aspectRatio: `${photo.width} / ${photo.height}`,
+          backgroundColor: photo.color
+        }}
             className="bg-neutral-900 group cursor-pointer relative w-full"
         >
 
@@ -27,7 +30,7 @@ export default function ImageContainer({ photo, preload = false }: Props) {
                 preload={preload}
                 // className=" object-cover transition-all duration-400 group-hover:brightness-75 group-hover:scale-102"
                 className={`
-                                    object-cover transition-all duration-500 ease-in-out
+                                    object-cover transition-all duration-700 ease-in-out
                                     group-hover:scale-105
                                     ${isLoading ? "opacity-0 blur-sm" : "opacity-100 blur-0"}
                                 `}

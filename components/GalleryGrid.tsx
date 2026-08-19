@@ -108,7 +108,7 @@ export default function GalleryGrid({
                     {/* You can replace this text with a spinner or a colored placeholder later! */}
                     {isLoading ? (
                         <div className="mb-5 flex flex-row justify-center gap-3.5 items-center">
-                            <span className="loading loading-ring loading-xl"></span>
+                            <span className="loading loading-spinner loading-l text-white"></span>
                             <div className="list">Loading...</div>
                         </div>
                     ) : (
