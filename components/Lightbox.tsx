@@ -113,7 +113,7 @@ export default function Lightbox({
               width={photos[currentIndex].width}
               height={photos[currentIndex].height}
               className="object-contain w-full h-full max-h-[90vh]"
-              sizes="100vw"
+              unoptimized
               priority
             />
           </motion.div>
