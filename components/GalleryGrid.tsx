@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Photo, getImagesFromFolder } from "@/lib/cloudinary";
 import ImageContainer from "./ImageContainer";
 import { useInView } from "react-intersection-observer";
@@ -52,29 +52,41 @@ export default function GalleryGrid({
     window.history.pushState(null, "", window.location.pathname);
   };
 
+  const loadMorePhotos = useCallback(async () => {
+    if (isLoading || !cursor) return;
+
+    setIsLoading(true);
+
+    try {
+      const res = await getImagesFromFolder(folderName, cursor);
+
+      setPhotos((prev) => [...prev, ...res.photos]);
+
+      setCursor(res.next_cursor);
+    } catch (error) {
+      console.error("Error loading more photos:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isLoading, cursor, folderName]);
+
+  // intersection observer effect
   useEffect(() => {
-    async function loadMorePhotos() {
-      if (isLoading || !cursor) return;
-
-      setIsLoading(true);
-
-      try {
-        const res = await getImagesFromFolder(folderName, cursor);
-
-        setPhotos((prev) => [...prev, ...res.photos]);
-
-        setCursor(res.next_cursor);
-      } catch (error) {
-        console.error("Error loading more photos:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
     if (inView && cursor) {
-      loadMorePhotos();
+      setTimeout(() => {
+        loadMorePhotos();
+      }, 0);
     }
-  }, [inView, cursor, isLoading]);
+  }, [inView, cursor, loadMorePhotos]);
+
+  // Lightbox pre-fetcher effect
+  useEffect(() => {
+    if (selectedIndex !== null && selectedIndex >= photos.length - 3 && cursor) {
+      setTimeout(() => {
+        loadMorePhotos();
+      }, 0);
+    }
+  }, [selectedIndex, photos.length, cursor, loadMorePhotos]);
 
   const mobileCol = getBalancedColumns(photos, 2);
   const desktopCol = getBalancedColumns(photos, 3);
