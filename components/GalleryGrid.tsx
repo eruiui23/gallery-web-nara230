@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { Photo, getImagesFromFolder } from "@/lib/cloudinary";
 import ImageContainer from "./ImageContainer";
 import { useInView } from "react-intersection-observer";
-import Lightbox from "./Lightbox";
+import dynamic from "next/dynamic";
+const Lightbox = dynamic(() => import("./Lightbox"), { ssr: false });
 
 type Props = {
   // photos: Photo[];
