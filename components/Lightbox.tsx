@@ -101,8 +101,8 @@ export default function Lightbox({
 
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="relative w-full h-full max-w-7xl max-h-[90vh] mx-4 md:mx-20 flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
