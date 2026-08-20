@@ -1,5 +1,5 @@
-## This is my porto project :D
+## Nara230
 
-idk when will this finish but its a gallery from all of my photograph starts from my highschool moments, so that people can revisit these tiny piece of memories fragments
+I don't know when this will be finished, but it's a gallery of all my photos, starting from my high school days, so I can revisit these tiny fragments of memories.
 
-![theGOAT](https://media1.tenor.com/m/agBwsOHKrGcAAAAd/nendo-riki-nendo.gif)
+![theGOAT](https://media1.tenor.com/m/SwJxLousHTwAAAAd/anime-saiki.gif)
