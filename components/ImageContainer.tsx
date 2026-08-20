@@ -7,12 +7,15 @@ type Props = {
   photo: Photo;
   preload?: boolean;
   onClick?: () => void;
+  ref?: React.Ref<HTMLDivElement>
 };
 
 export default function ImageContainer({
   photo,
   preload = false,
   onClick,
+  ref,
+  ...props
 }: Props) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,6 +27,8 @@ export default function ImageContainer({
       }}
       onClick={onClick}
       className="bg-neutral-900 group cursor-pointer relative w-full"
+      ref={ref}
+      {...props}
     >
       <Image
         src={photo.src}

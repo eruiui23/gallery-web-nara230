@@ -30,6 +30,8 @@ function getBalancedColumns(photos: Photo[], numCols: number): Photo[][] {
   return columns;
 }
 
+const MotionImageContainer = motion.create(ImageContainer);
+
 export default function GalleryGrid({
   initialPhotos,
   initialCursor,
@@ -110,7 +112,6 @@ export default function GalleryGrid({
   const mobileCol = getBalancedColumns(photos, 2);
   const desktopCol = getBalancedColumns(photos, 3);
 
-  const MotionImageContainer = motion.create(ImageContainer);
 
   const mapImage = (bucket: Photo[], bucketIdx: number) => (
     <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
@@ -123,6 +124,11 @@ export default function GalleryGrid({
             key={photo.id}
             preload={bucketIdx < 2}
             onClick={() => openLightbox(globalIndex)}
+            // The New Infinite-Scroll Friendly Animation:
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           />
         );
       })}
