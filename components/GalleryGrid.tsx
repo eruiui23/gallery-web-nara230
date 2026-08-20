@@ -6,6 +6,7 @@ import ImageContainer from "./ImageContainer";
 import { useInView } from "react-intersection-observer";
 import dynamic from "next/dynamic";
 const Lightbox = dynamic(() => import("./Lightbox"), { ssr: false });
+import { motion } from "motion/react";
 
 type Props = {
   // photos: Photo[];
@@ -39,6 +40,20 @@ export default function GalleryGrid({
   const [isLoading, setIsLoading] = useState(false);
   const { ref, inView } = useInView();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  // motion variation
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   const openLightbox = (index: number) => {
     setSelectedIndex(index);
@@ -81,7 +96,11 @@ export default function GalleryGrid({
 
   // Lightbox pre-fetcher effect
   useEffect(() => {
-    if (selectedIndex !== null && selectedIndex >= photos.length - 3 && cursor) {
+    if (
+      selectedIndex !== null &&
+      selectedIndex >= photos.length - 3 &&
+      cursor
+    ) {
       setTimeout(() => {
         loadMorePhotos();
       }, 0);
@@ -91,45 +110,32 @@ export default function GalleryGrid({
   const mobileCol = getBalancedColumns(photos, 2);
   const desktopCol = getBalancedColumns(photos, 3);
 
+  const MotionImageContainer = motion.create(ImageContainer);
+
+  const mapImage = (bucket: Photo[], bucketIdx: number) => (
+    <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
+      {bucket.map((photo) => {
+        const globalIndex = photos.findIndex((p) => p.id === photo.id);
+
+        return (
+          <MotionImageContainer
+            photo={photo}
+            key={photo.id}
+            preload={bucketIdx < 2}
+            onClick={() => openLightbox(globalIndex)}
+          />
+        );
+      })}
+    </div>
+  );
+
   return (
     <main className="max-w-350 ">
-      <div className="flex md:hidden gap-10">
-        {mobileCol.map((bucket, bucketIdx) => (
-          <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
-            {bucket.map((photo) => {
-              const globalIndex = photos.findIndex((p) => p.id === photo.id);
+      {/* mobile */}
+      <div className="flex md:hidden gap-10">{mobileCol.map(mapImage)}</div>
 
-              return (
-                <ImageContainer
-                  photo={photo}
-                  key={photo.id}
-                  preload={bucketIdx < 2}
-                  onClick={() => openLightbox(globalIndex)}
-                />
-              );
-            })}
-          </div>
-        ))}
-      </div>
-
-      <div className="hidden md:flex gap-10">
-        {desktopCol.map((bucket, bucketIdx) => (
-          <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
-            {bucket.map((photo) => {
-              const globalIndex = photos.findIndex((p) => p.id === photo.id);
-
-              return (
-                <ImageContainer
-                  photo={photo}
-                  key={photo.id}
-                  preload={bucketIdx < 2}
-                  onClick={() => openLightbox(globalIndex)}
-                />
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      {/* desktop */}
+      <div className="hidden md:flex gap-10">{desktopCol.map(mapImage)}</div>
       {cursor && (
         <div
           ref={ref}
