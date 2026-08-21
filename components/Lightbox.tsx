@@ -80,7 +80,7 @@ export default function Lightbox({
                 e.stopPropagation();
                 onNavigate(currentIndex - 1);
               }}
-              className="absolute left-4 md:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+              className="hidden sm:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
             >
               <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-18">
                 <polyline points="15 18 9 12 15 6"></polyline>
@@ -95,7 +95,7 @@ export default function Lightbox({
                 e.stopPropagation();
                 onNavigate(currentIndex + 1);
               }}
-              className="absolute right-4 md:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+              className="hidden sm:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-18">
                 <polyline points="9 18 15 12 9 6"></polyline>
@@ -109,7 +109,7 @@ export default function Lightbox({
             animate={{ opacity: loadedIndex === currentIndex ? 1 : 0 }}
             exit={{ opacity: 0, transition: { duration:0.4, ease: "easeOut"} }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center"
+            className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center px-10 sm:px-20"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
