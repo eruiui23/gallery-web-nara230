@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "@/lib/cloudinary";
@@ -19,6 +19,10 @@ export default function Lightbox({
   onClose,
   onNavigate,
 }: Props) {
+
+  const [loadedIndex, setLoadedIndex] = useState<number | null>(null);
+
+
   useEffect(() => {
     if (currentIndex === null) {
       document.body.style.overflow = "auto";
@@ -56,7 +60,7 @@ export default function Lightbox({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[99999] bg-black flex items-center justify-center"
-          onClick={onClose}
+          // onClick={onClose}
         >
           {/* Close Button */}
           <button
@@ -102,9 +106,9 @@ export default function Lightbox({
           <motion.div
             key={currentIndex}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration:0.6, ease: "easeOut"} }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            animate={{ opacity: loadedIndex === currentIndex ? 1 : 0 }}
+            exit={{ opacity: 0, transition: { duration:0.4, ease: "easeOut"} }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
@@ -116,6 +120,7 @@ export default function Lightbox({
               className="object-contain w-full h-full max-h-[80vh]"
               unoptimized
               priority
+              onLoad={() => setLoadedIndex(currentIndex)}
             />
           </motion.div>
         </AnimatePresence>
