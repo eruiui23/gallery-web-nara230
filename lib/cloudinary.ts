@@ -16,13 +16,12 @@ export interface Photo {
   color: string;
 }
 
-// Interface representing the shape of an asset returned by Cloudinary's Search API
 interface CloudinarySearchResult {
   public_id: string;
   secure_url: string;
   width: number;
   height: number;
-  [key: string]: unknown; // Allows other Cloudinary properties without throwing errors
+  [key: string]: unknown;
 }
 
 interface CloudinaryResponse {
@@ -56,7 +55,7 @@ export async function getImagesFromFolder(
 
         return {
             id: file.public_id,
-            src: file.secure_url, // <--- Still send the original high-res URL to the browser
+            src: file.secure_url,
             width: file.width,
             height: file.height,
             color: color.hex,

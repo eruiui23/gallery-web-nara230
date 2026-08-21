@@ -45,13 +45,11 @@ export default function GalleryGrid({
 
   const openLightbox = (index: number) => {
     setSelectedIndex(index);
-    // Push the hash to the URL without reloading the page!
     window.history.pushState(null, "", `#p-${index}`);
   };
 
   const closeLightbox = () => {
     setSelectedIndex(null);
-    // Clean up the URL when closing
     window.history.pushState(null, "", window.location.pathname);
   };
 
