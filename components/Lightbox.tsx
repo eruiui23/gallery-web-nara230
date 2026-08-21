@@ -48,7 +48,7 @@ export default function Lightbox({
   if (typeof document === "undefined") return null;
 
   return createPortal(
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {currentIndex !== null && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -63,7 +63,7 @@ export default function Lightbox({
             onClick={onClose}
             className="absolute top-6 right-6 text-white z-50 p-2 opacity-70 hover:opacity-100 transition-opacity"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-10">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -76,9 +76,9 @@ export default function Lightbox({
                 e.stopPropagation();
                 onNavigate(currentIndex - 1);
               }}
-              className="absolute left-4 md:left-10 text-white z-50 p-4 opacity-70 hover:opacity-100 transition-opacity"
+              className="absolute left-4 md:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-18">
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>
             </button>
@@ -91,20 +91,21 @@ export default function Lightbox({
                 e.stopPropagation();
                 onNavigate(currentIndex + 1);
               }}
-              className="absolute right-4 md:right-10 text-white z-50 p-4 opacity-70 hover:opacity-100 transition-opacity"
+              className="absolute right-4 md:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-18">
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </button>
           )}
-
+          <AnimatePresence>
           <motion.div
             key={currentIndex}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="relative w-full h-full max-w-7xl max-h-[90vh] mx-4 md:mx-20 flex items-center justify-center"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -112,12 +113,14 @@ export default function Lightbox({
               alt="Enlarged gallery photo"
               width={photos[currentIndex].width}
               height={photos[currentIndex].height}
-              className="object-contain w-full h-full max-h-[90vh]"
+              className="object-contain w-full h-full max-h-[80vh]"
               unoptimized
               priority
             />
           </motion.div>
+        </AnimatePresence>
         </motion.div>
+
       )}
     </AnimatePresence>,
     document.body
