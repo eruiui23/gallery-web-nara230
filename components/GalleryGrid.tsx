@@ -136,7 +136,7 @@ export default function GalleryGrid({
           ref={ref}
           className="w-full py-10 flex justify-center items-center mt-10"
         >
-     k    {isLoading ? (
+         {isLoading ? (
             <div className="mb-5 flex flex-row justify-center gap-3.5 items-center">
               <span className="loading loading-spinner loading-l text-white"></span>
               <div className="list">Loading...</div>
