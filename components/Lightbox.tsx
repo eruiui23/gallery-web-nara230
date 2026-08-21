@@ -103,8 +103,8 @@ export default function Lightbox({
             key={currentIndex}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            exit={{ opacity: 0, transition: { duration:0.6, ease: "easeOut"} }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
