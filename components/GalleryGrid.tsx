@@ -43,20 +43,6 @@ export default function GalleryGrid({
   const { ref, inView } = useInView();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  // motion variation
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   const openLightbox = (index: number) => {
     setSelectedIndex(index);
     // Push the hash to the URL without reloading the page!
@@ -112,7 +98,6 @@ export default function GalleryGrid({
   const mobileCol = getBalancedColumns(photos, 2);
   const desktopCol = getBalancedColumns(photos, 3);
 
-
   const mapImage = (bucket: Photo[], bucketIdx: number) => (
     <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
       {bucket.map((photo) => {
@@ -124,11 +109,14 @@ export default function GalleryGrid({
             key={photo.id}
             preload={bucketIdx < 2}
             onClick={() => openLightbox(globalIndex)}
-            // The New Infinite-Scroll Friendly Animation:
+
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1, margin: "100px" }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeOut",
+              delay: (globalIndex % 25) * 0.1, //25 is the fetch size
+            }}
           />
         );
       })}
