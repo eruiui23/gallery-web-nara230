@@ -100,14 +100,14 @@ export default function GalleryGrid({
 
   const mapImage = (bucket: Photo[], bucketIdx: number) => (
     <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
-      {bucket.map((photo) => {
+      {bucket.map((photo, photoIdx) => {
         const globalIndex = photos.findIndex((p) => p.id === photo.id);
 
         return (
           <MotionImageContainer
             photo={photo}
             key={photo.id}
-            preload={bucketIdx < 2}
+            preload={photoIdx < 2}
             onClick={() => openLightbox(globalIndex)}
 
             initial={{ opacity: 0, y: 30 }}
@@ -130,13 +130,13 @@ export default function GalleryGrid({
 
       {/* desktop */}
       <div className="hidden md:flex gap-10">{desktopCol.map(mapImage)}</div>
+
       {cursor && (
         <div
           ref={ref}
           className="w-full py-10 flex justify-center items-center mt-10"
         >
-          {/* You can replace this text with a spinner or a colored placeholder later! */}
-          {isLoading ? (
+     k    {isLoading ? (
             <div className="mb-5 flex flex-row justify-center gap-3.5 items-center">
               <span className="loading loading-spinner loading-l text-white"></span>
               <div className="list">Loading...</div>
