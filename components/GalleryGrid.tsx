@@ -48,7 +48,7 @@ export default function GalleryGrid({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
@@ -60,7 +60,7 @@ export default function GalleryGrid({
   const openLightbox = (index: number) => {
     setSelectedIndex(index);
     // Push the hash to the URL without reloading the page!
-    window.history.pushState(null, "", `#photo-${index}`);
+    window.history.pushState(null, "", `#p-${index}`);
   };
 
   const closeLightbox = () => {
@@ -127,7 +127,7 @@ export default function GalleryGrid({
             // The New Infinite-Scroll Friendly Animation:
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0.1, margin: "100px" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           />
         );
