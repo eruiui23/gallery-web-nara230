@@ -25,6 +25,13 @@ type LeftArrowProps = {
 type RightArrowProps = {
   currentIndex: number;
   onNavigate: (newIndex: number) => void;
+  totalPhotos: number;
+};
+
+type ImageTapNavigationProps = {
+  currentIndex: number | null;
+  onNavigate: (newIndex: number) => void;
+  totalPhotos: number;
 };
 
 function CloseButton({ onClose }: CloseButtonProps) {
@@ -52,51 +59,95 @@ function CloseButton({ onClose }: CloseButtonProps) {
 
 function LeftArrow({ currentIndex, onNavigate }: LeftArrowProps) {
   return (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        onNavigate(currentIndex - 1);
-      }}
-      className="hidden sm:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-18"
-      >
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-    </button>
+    <>
+      {currentIndex > 0 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigate(currentIndex - 1);
+          }}
+          className="hidden sm:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-18"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      )}
+    </>
   );
 }
 
-function RightArrow({ currentIndex, onNavigate }: RightArrowProps) {
+function RightArrow({ currentIndex, onNavigate, totalPhotos }: RightArrowProps) {
   return (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        onNavigate(currentIndex + 1);
-      }}
-      className="hidden sm:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-18"
-      >
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </button>
+    <>
+      {currentIndex < totalPhotos - 1 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigate(currentIndex + 1);
+          }}
+          className="hidden sm:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-18"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      )}
+    </>
+  );
+}
+
+function ImageTapNavigation({
+  currentIndex,
+  onNavigate,
+  totalPhotos,
+}: ImageTapNavigationProps) {
+  if (currentIndex === null) return null;
+
+  return (
+    <div className="block sm:hidden">
+      {/* Left Invisible Touch Area (Previous) */}
+      {currentIndex > 0 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigate(currentIndex - 1);
+          }}
+          className="absolute inset-y-0 left-0 w-1/2 z-40 outline-none cursor-pointer"
+          aria-label="Previous photo"
+        />
+      )}
+
+      {/* Right Invisible Touch Area (Next) */}
+      {currentIndex < totalPhotos - 1 && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigate(currentIndex + 1);
+          }}
+          className="absolute inset-y-0 right-0 w-1/2 z-40 outline-none cursor-pointer"
+          aria-label="Next photo"
+        />
+      )}
+    </div>
   );
 }
 
@@ -147,14 +198,9 @@ export default function Lightbox({
         >
           {/*buttons*/}
           <CloseButton onClose={onClose} />
+          <LeftArrow currentIndex={currentIndex} onNavigate={onNavigate} />
+          <RightArrow currentIndex={currentIndex} onNavigate={onNavigate} totalPhotos={photos.length} />
 
-          {currentIndex > 0 && (
-            <LeftArrow currentIndex={currentIndex} onNavigate={onNavigate} />
-          )}
-
-          {currentIndex < photos.length - 1 && (
-            <RightArrow currentIndex={currentIndex} onNavigate={onNavigate} />
-          )}
           <AnimatePresence>
             <motion.div
               key={currentIndex}
@@ -168,6 +214,11 @@ export default function Lightbox({
               className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center px-10 sm:px-20"
               onClick={(e) => e.stopPropagation()}
             >
+              <ImageTapNavigation
+                currentIndex={currentIndex}
+                onNavigate={onNavigate}
+                totalPhotos={photos.length}
+              />
               <Image
                 src={photos[currentIndex].src}
                 alt="Enlarged gallery photo"
