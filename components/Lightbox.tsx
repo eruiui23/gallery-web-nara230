@@ -212,7 +212,6 @@ export default function Lightbox({
               }}
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center px-10 sm:px-20"
-              onClick={(e) => e.stopPropagation()}
             >
               <ImageTapNavigation
                 currentIndex={currentIndex}
@@ -225,6 +224,7 @@ export default function Lightbox({
                 width={photos[currentIndex].width}
                 height={photos[currentIndex].height}
                 className="object-contain w-full h-full max-h-[80vh]"
+                onClick={(e) => e.stopPropagation()}
                 unoptimized
                 priority
                 onLoad={() => {
