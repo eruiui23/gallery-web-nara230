@@ -1,4 +1,4 @@
-import { EmblaCarousel } from "@/components/EmblaCarousel/EmblaCarousel";
+import { EmblaCarousel } from "@/components/EmblaCarousel";
 import ImageWall from "@/components/ImageWall";
 
 function FavDivider() {

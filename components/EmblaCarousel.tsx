@@ -6,7 +6,7 @@ import Image from 'next/image'
 import localfont from "next/font/local"
 
 const gothamBold = localfont({
-    src: '../../public/fonts/GothamBold.otf',
+    src: '../public/fonts/GothamBold.otf',
 })
 
 const galleryData = [
