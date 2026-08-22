@@ -6,19 +6,106 @@ import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "@/lib/cloudinary";
 import { createPortal } from "react-dom";
 
-type Props = {
+type LightBoxProps = {
   photos: Photo[];
   currentIndex: number | null;
   onClose: () => void;
   onNavigate: (newIndex: number) => void;
 };
 
+type CloseButtonProps = {
+  onClose: () => void;
+};
+
+type LeftArrowProps = {
+  currentIndex: number;
+  onNavigate: (newIndex: number) => void;
+};
+
+type RightArrowProps = {
+  currentIndex: number;
+  onNavigate: (newIndex: number) => void;
+};
+
+function CloseButton({ onClose }: CloseButtonProps) {
+  return (
+    <button
+      onClick={onClose}
+      className="absolute top-6 right-6 text-white z-50 p-2 opacity-70 hover:opacity-100 transition-opacity"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-10"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  );
+}
+
+function LeftArrow({ currentIndex, onNavigate }: LeftArrowProps) {
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        onNavigate(currentIndex - 1);
+      }}
+      className="hidden sm:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-18"
+      >
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+  );
+}
+
+function RightArrow({ currentIndex, onNavigate }: RightArrowProps) {
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        onNavigate(currentIndex + 1);
+      }}
+      className="hidden sm:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-18"
+      >
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  );
+}
+
 export default function Lightbox({
   photos,
   currentIndex,
   onClose,
   onNavigate,
-}: Props) {
+}: LightBoxProps) {
   const [loadedImages, setLoadedImages] = useState<number[]>([]);
 
   useEffect(() => {
@@ -56,75 +143,17 @@ export default function Lightbox({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[99999] bg-black flex items-center justify-center"
-          // onClick={onClose}
+          onClick={onClose}
         >
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-6 right-6 text-white z-50 p-2 opacity-70 hover:opacity-100 transition-opacity"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="w-10"
-            >
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
+          {/*buttons*/}
+          <CloseButton onClose={onClose} />
 
-          {/* Left Arrow */}
           {currentIndex > 0 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onNavigate(currentIndex - 1);
-
-              }}
-              className="hidden sm:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-18"
-              >
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
+            <LeftArrow currentIndex={currentIndex} onNavigate={onNavigate} />
           )}
 
-          {/* Right Arrow */}
           {currentIndex < photos.length - 1 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onNavigate(currentIndex + 1);
-              }}
-              className="hidden sm:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-18"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
+            <RightArrow currentIndex={currentIndex} onNavigate={onNavigate} />
           )}
           <AnimatePresence>
             <motion.div
