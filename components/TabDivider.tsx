@@ -27,7 +27,7 @@ export default function TabDivider({ tabs, activeTab, onTabChange }: Props) {
                 {tab.label}
               </button>
                 {tabIdx === tabs.length - 1 ? "" : (
-                  <span className="ml-5 text-xl">|</span>
+                  <span className="ml-4 text-xl">|</span>
                 )}
             </div>
           );
