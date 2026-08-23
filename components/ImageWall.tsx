@@ -11,7 +11,7 @@ export default async function ImageWall({
     const res = await getImagesFromFolder(folderName);
 
     return (
-        <div className="flex justify-center mx-4">
+        <div className="flex justify-center mx-4 min-h-screen">
             <GalleryGrid initialPhotos={res.photos} initialCursor={res.next_cursor} folderName={folderName}/>
         </div>
     );
