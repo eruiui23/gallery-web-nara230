@@ -14,7 +14,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 0);
+    const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -24,7 +24,7 @@ export default function Navbar() {
 
   return (
     <header className={`${gothamBold.className} header-scrolled`}>
-      <nav className={`mx-8 z-100 duration-300 ${scrolled ? "py-0" : "py-4"}`}>
+      <nav className={`mx-8 z-100 duration-500 ease-out ${scrolled ? "py-0" : "py-4"}`}>
         <ul className="flex flex-row items-center justify-between">
           {/* Brand / Logo */}
           <li className="HomeButton z-50">
