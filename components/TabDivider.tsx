@@ -14,13 +14,13 @@ export default function TabDivider({ tabs, activeTab, onTabChange }: Props) {
       <div className="divider divider-primary  uppercase font-[Arial] text-primary ">
         {tabs.map((tab, tabIdx) => {
           return (
-            <div key={tab.id} className="group">
+            <div key={tab.id} className="inline-flex items-center">
               <button
                 onClick={() => onTabChange(tab.id)}
                 className={`transition-colors duration-200 uppercase  ${
                   activeTab === tab.id
                     ? "tab-active text-primary underline-offset-6 font-semibold"
-                    : "text-neutral-500 group-hover:text-white font-semibold"
+                    : "text-neutral-500 hover:text-white font-semibold"
                 }`}
               >
               {/*<span className={`mr-2 duration-200 font-[Gotham] pt-1 ${activeTab === tab.id ? "" : "text-neutral-500 group-hover:text-white" }`}>Fav</span>*/}
