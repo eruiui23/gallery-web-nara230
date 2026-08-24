@@ -45,12 +45,10 @@ export default function GalleryGrid({
 
   const openLightbox = (index: number) => {
     setSelectedIndex(index);
-    window.history.pushState(null, "", `#p-${index}`);
   };
 
   const closeLightbox = () => {
     setSelectedIndex(null);
-    window.history.pushState(null, "", window.location.pathname);
   };
 
   const loadMorePhotos = useCallback(async () => {
@@ -150,7 +148,6 @@ export default function GalleryGrid({
         onClose={closeLightbox}
         onNavigate={(newIndex) => {
           setSelectedIndex(newIndex);
-          window.history.pushState(null, "", `#photo-${newIndex}`);
         }}
       />
     </main>
