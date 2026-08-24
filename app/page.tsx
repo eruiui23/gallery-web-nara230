@@ -1,6 +1,6 @@
 import { EmblaCarousel } from "@/components/EmblaCarousel";
 import ImageWall from "@/components/ImageWall";
-import GalleryTabs from "@/components/GalleryTabs";
+import HomeTabs from "@/components/HomeTabs";
 
 const myTabs = [
   {
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex w-7/8 flex-col m-auto">
-        <GalleryTabs tabs={myTabs} />
+        <HomeTabs tabs={myTabs} />
       </div>
       {/*<ImageWall folderName="Nara230/Gallery/Uprak" />*/}
     </div>
