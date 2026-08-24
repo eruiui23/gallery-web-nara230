@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import TabDivider from "./TabDivider";
 
 export type TabItem = {
@@ -14,7 +14,18 @@ type Props = {
 };
 
 export default function GalleryTabs({ tabs }: Props) {
-  const [currentTab, setCurrentTab] = useState(tabs[0].id);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const currentTab = searchParams.get("tab") || tabs[0].id;
+
+  const handleTabChange = (tabId: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", tabId);
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   const activeTabContent = tabs.find((t) => t.id === currentTab)?.content;
 
@@ -23,7 +34,7 @@ export default function GalleryTabs({ tabs }: Props) {
       <TabDivider
         tabs={tabs}
         activeTab={currentTab}
-        onTabChange={setCurrentTab}
+        onTabChange={handleTabChange}
       />
 
       <div className="mt-8">
