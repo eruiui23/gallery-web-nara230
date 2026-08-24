@@ -22,7 +22,8 @@ export default function Home() {
     <div className="flex flex-col gap-5">
       <div className="h-screen flex flex-col justify-between py-20">
         <div className="flex flex-1 items-center justify-center overflow-hidden">
-          <EmblaCarousel />
+          <span className="loading loading-bars loading-xl absolute scale-150"></span>
+          <EmblaCarousel/>
         </div>
       </div>
       <div className="flex w-7/8 flex-col m-auto">

@@ -73,6 +73,28 @@ const galleryData = [
 
 const delay = 4000
 
+function FadeInImage({ src, alt, priority }: { src: string; alt: string; priority?: boolean }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+
+    <div className="relative w-full h-full ">
+      <Image
+        src={src}
+        alt={alt}
+        width={900}
+        height={600}
+        sizes="50vw"
+        priority={priority}
+        className={`object-cover transition-opacity duration-500 ${
+          isLoaded ? "opacity-100" : "opacity-0"
+        }`}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </div>
+  );
+}
+
 export function EmblaCarousel() {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
@@ -96,7 +118,6 @@ export function EmblaCarousel() {
         if (emblaApi) {
             emblaApi.on('select', onSelect)
 
-            // Update progress bar every 50ms
             interval = setInterval(() => {
                 setProgress(prev => {
                     if (prev >= 100) return 0
@@ -125,22 +146,16 @@ export function EmblaCarousel() {
     return (
       <div className="embla relative w-full">
           <div className="embla__viewport overflow-hidden w-full" ref={emblaRef}>
-
               <div className="embla__container flex w-full">
-
-                  {galleryData.map((photo) => (
-                      <div className="embla__slide min-w-full shrink-0 relative" key={photo.id}>
-                          <Image
-                              src={photo.src}
-                              alt={photo.alt}
-                              width={0}
-                              height={0}
-                              sizes='50vw'
-                              className="w-full h-auto object-cover"
-                              priority={photo.preload}
-                          />
-                      </div>
-                  ))}
+                {galleryData.map((photo) => (
+                  <div className="embla__slide min-w-full shrink-0 relative" key={photo.id}>
+                    <FadeInImage
+                      src={photo.src}
+                      alt={photo.alt}
+                      priority={photo.preload}
+                    />
+                  </div>
+                ))}
               </div>
           </div>
 
