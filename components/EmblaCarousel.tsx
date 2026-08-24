@@ -84,9 +84,9 @@ function FadeInImage({ src, alt, priority }: { src: string; alt: string; priorit
         alt={alt}
         width={900}
         height={600}
-        sizes="50vw"
+        sizes="100vw"
         priority={priority}
-        className={`object-cover transition-opacity duration-500 ${
+        className={`w-full h-auto object-cover transition-opacity duration-500 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
         onLoad={() => setIsLoaded(true)}
