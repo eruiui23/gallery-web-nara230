@@ -17,7 +17,7 @@ export default function GalleryCard({ title, src }: Props) {
     <motion.div
       className="w-full border-4 border-white"
       initial={{ opacity: 0  }}
-      animate={{ opacity: 100 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.3}}
     >
       <div className=" w-full bg-white relative">
