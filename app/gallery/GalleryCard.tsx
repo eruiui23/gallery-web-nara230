@@ -31,7 +31,7 @@ export default function GalleryCard({ title, src }: Props) {
           onLoad={callIsLoaded}
         />
         <div
-          className={`thinfont absolute bottom-0.5 left-1.5 text-3xl sm:text-xl md:text-xl lg:text-3xl text-balance  text-white font-medium text-shadow-md/30 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+          className={`thinfont absolute bottom-0.5 left-1.5 text-3xl sm:text-xl md:text-xl lg:text-4xl text-balance  text-white font-medium text-shadow-md/30 ${isLoaded ? "opacity-100" : "opacity-0"}`}
         >
           {title}
         </div>
