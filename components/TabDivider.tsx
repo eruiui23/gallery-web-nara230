@@ -11,7 +11,7 @@ type Props = {
 export default function TabDivider({ tabs, activeTab, onTabChange }: Props) {
   return (
     <>
-      <div className="divider divider-primary  uppercase font-[Arial] text-primary ">
+      <div className="divider divider-primary md:divider-start text-sm sm:text-base uppercase font-[Arial] text-primary ">
         {tabs.map((tab, tabIdx) => {
           return (
             <div key={tab.id} className="inline-flex items-center">
@@ -23,7 +23,6 @@ export default function TabDivider({ tabs, activeTab, onTabChange }: Props) {
                     : "text-neutral-500 hover:text-white font-semibold"
                 }`}
               >
-              {/*<span className={`mr-2 duration-200 font-[Gotham] pt-1 ${activeTab === tab.id ? "" : "text-neutral-500 group-hover:text-white" }`}>Fav</span>*/}
                 {tab.label}
               </button>
                 {tabIdx === tabs.length - 1 ? "" : (
