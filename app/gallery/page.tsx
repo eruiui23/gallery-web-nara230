@@ -2,6 +2,7 @@ import GalleryCard from "./GalleryCard";
 import Link from "next/link";
 import GalleryTabs from "@/components/GalleryTabs";
 import { galleryTabsContent } from "@/lib/galleryData";
+import { Suspense } from "react";
 
 export default async function GalleryPage() {
   const myTabs = galleryTabsContent.map((tab) => {
@@ -26,7 +27,13 @@ export default async function GalleryPage() {
   return (
     <div className="mt-30 flex justify-center mx-auto w-7/8 pb-10">
       <div className="flex flex-col">
-        <GalleryTabs tabs={myTabs} />
+        <Suspense
+          fallback={
+            <div className="text-center text-white py-10">Loading tabs...</div>
+          }
+        >
+          <GalleryTabs tabs={myTabs} />
+        </Suspense>
       </div>
     </div>
   );
