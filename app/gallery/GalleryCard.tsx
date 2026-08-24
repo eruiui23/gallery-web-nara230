@@ -59,7 +59,7 @@ export default function GalleryCard({ title, src }: Props) {
           width={1200}
           height={800}
           sizes="(max-width: 768px) 50vw, 33vw"
-          className={`group-hover:scale-105 group-hover:opacity-80 duration-300 object-cover ${isLoaded ? "opacity-100" : "opacity-0"}`}
+          className={`group-hover:scale-103 group-hover:opacity-90 duration-300 object-cover ${isLoaded ? "opacity-100" : "opacity-0"}`}
           onLoad={callIsLoaded}
         />
       </div>
