@@ -4,6 +4,12 @@ type Props = {
     params: Promise<{ albumName: string }>;
 };
 
+
+
+export async function generateStaticParams() {
+  return [];
+}
+
 export default async function Album({ params }: Props) {
     const { albumName } = await params;
 

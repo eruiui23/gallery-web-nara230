@@ -88,7 +88,7 @@ export const galleryTabsContent: TabCategory[] = [
       },
       {
         title: "uprak",
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1786507500/DSCF6732_web_xzbt1h.jpg",
+        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1787589880/DSCF6762_web_gxhmok.jpg",
         href: "/gallery/Uprak",
       },
     ],
