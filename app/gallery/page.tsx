@@ -31,7 +31,7 @@ export default async function GalleryPage() {
       <div className="flex flex-col">
         <Suspense
           fallback={
-            <div className="text-center text-white py-10">Loading tabs...</div>
+            <div className="text-center text-white py-10"></div>
           }
         >
           <GalleryTabs tabs={myTabs} />
