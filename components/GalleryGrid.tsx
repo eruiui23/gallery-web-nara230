@@ -94,8 +94,34 @@ export default function GalleryGrid({
   const mobileCol = getBalancedColumns(photos, 2);
   const desktopCol = getBalancedColumns(photos, 3);
 
-  const mapImage = (bucket: Photo[], bucketIdx: number) => (
+  const mapImageDesktop = (bucket: Photo[], bucketIdx: number) => (
     <div key={bucketIdx} className="flex-1 flex flex-col gap-10">
+      {bucket.map((photo, photoIdx) => {
+        const globalIndex = photos.findIndex((p) => p.id === photo.id);
+
+        return (
+          <MotionImageContainer
+            photo={photo}
+            key={photo.id}
+            preload={photoIdx < 2}
+            onClick={() => openLightbox(globalIndex)}
+
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeOut",
+              delay: (globalIndex % 25) * 0.1, //25 is the fetch size
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+
+
+  const mapImageMobile = (bucket: Photo[], bucketIdx: number) => (
+    <div key={bucketIdx} className="flex-1 flex flex-col gap-5">
       {bucket.map((photo, photoIdx) => {
         const globalIndex = photos.findIndex((p) => p.id === photo.id);
 
@@ -122,10 +148,10 @@ export default function GalleryGrid({
   return (
     <main className="max-w-350 ">
       {/* mobile */}
-      <div className="flex md:hidden gap-10">{mobileCol.map(mapImage)}</div>
+      <div className="flex md:hidden gap-5">{mobileCol.map(mapImageMobile)}</div>
 
       {/* desktop */}
-      <div className="hidden md:flex gap-10">{desktopCol.map(mapImage)}</div>
+      <div className="hidden md:flex gap-10">{desktopCol.map(mapImageDesktop)}</div>
 
       {cursor && (
         <div
