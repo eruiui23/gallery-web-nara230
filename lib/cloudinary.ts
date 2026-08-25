@@ -45,39 +45,22 @@ export async function getImagesFromFolder(
 
     const results = await query.execute();
 
-    const photos: Photo[] = [];
+    const photos = await Promise.all(results.resources.map(async (file: CloudinarySearchResult) => {
+        const tinyImageUrl = file.secure_url.replace("/upload/", "/upload/w_10/");
 
-        for (const file of results.resources as CloudinarySearchResult[]) {
-          try {
-            const tinyImageUrl = file.secure_url.replace("/upload/", "/upload/w_10/");
+        const response = await fetch(tinyImageUrl);
+        const buffer = Buffer.from(await response.arrayBuffer());
 
-            const response = await fetch(tinyImageUrl);
+        const { color } = await getPlaiceholder(buffer);
 
-            if (!response.ok) {
-              throw new Error(`Fetch failed with status: ${response.status}`);
-            }
-
-            const buffer = Buffer.from(await response.arrayBuffer());
-            const { color } = await getPlaiceholder(buffer);
-
-            photos.push({
-              id: file.public_id,
-              src: file.secure_url,
-              width: file.width,
-              height: file.height,
-              color: color.hex,
-            });
-          } catch (innerError) {
-            console.error(`Failed to generate color for ${file.public_id}:`, innerError);
-            photos.push({
-              id: file.public_id,
-              src: file.secure_url,
-              width: file.width,
-              height: file.height,
-              color: "#333333",
-            });
-          }
-        }
+        return {
+            id: file.public_id,
+            src: file.secure_url,
+            width: file.width,
+            height: file.height,
+            color: color.hex,
+        };
+    }));
 
     return {
       photos: photos,
