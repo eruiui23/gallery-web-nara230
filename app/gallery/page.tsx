@@ -4,7 +4,7 @@ import GalleryTabs from "@/components/GalleryTabs";
 import { galleryTabsContent } from "@/lib/galleryData";
 import { Suspense } from "react";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export default async function GalleryPage() {
   const myTabs = galleryTabsContent.map((tab) => {
