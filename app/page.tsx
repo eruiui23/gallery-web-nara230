@@ -6,13 +6,13 @@ const myTabs = [
   {
     id: "fragments",
     label: "Fragments",
-    content: <ImageWall key="uprak" folderName="Nara230/Gallery/Uprak" />,
+    content: <ImageWall key="uprak" folderName="Nara230/Fragments" />,
   },
   {
     id: "memories",
     label: "Memories",
     content: (
-      <ImageWall key="classmeet" folderName="Nara230/Gallery/classmeet" />
+      <ImageWall key="classmeet" folderName="Nara230/Memories" />
     ),
   },
 ];
