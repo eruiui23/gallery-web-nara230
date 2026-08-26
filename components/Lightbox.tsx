@@ -131,7 +131,7 @@ function ImageTapNavigation({
             e.stopPropagation();
             onNavigate(currentIndex - 1);
           }}
-          className="absolute inset-y-0 left-0 w-1/2 z-40 outline-none cursor-pointer"
+          className="absolute inset-y-0 left-0 w-1/4 z-40 outline-none cursor-pointer"
           aria-label="Previous photo"
         />
       )}
@@ -143,7 +143,7 @@ function ImageTapNavigation({
             e.stopPropagation();
             onNavigate(currentIndex + 1);
           }}
-          className="absolute inset-y-0 right-0 w-1/2 z-40 outline-none cursor-pointer"
+          className="absolute inset-y-0 right-0 w-3/4 z-40 outline-none cursor-pointer"
           aria-label="Next photo"
         />
       )}
