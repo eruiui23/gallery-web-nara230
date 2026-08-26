@@ -66,7 +66,7 @@ function LeftArrow({ currentIndex, onNavigate }: LeftArrowProps) {
             e.stopPropagation();
             onNavigate(currentIndex - 1);
           }}
-          className="hidden sm:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+          className="hidden md:block absolute left-0 xl:left-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ function RightArrow({ currentIndex, onNavigate, totalPhotos }: RightArrowProps) 
             e.stopPropagation();
             onNavigate(currentIndex + 1);
           }}
-          className="hidden sm:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
+          className="hidden md:block absolute right-0 xl:right-4 text-white z-50 py-10 opacity-70 hover:opacity-100 transition-opacity"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@ function ImageTapNavigation({
   if (currentIndex === null) return null;
 
   return (
-    <div className="block sm:hidden">
+    <div className="block md:hidden">
       {/* Left Invisible Touch Area (Previous) */}
       {currentIndex > 0 && (
         <button
@@ -211,7 +211,7 @@ export default function Lightbox({
                 transition: { duration: 0.4, ease: "easeOut" },
               }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center px-10 sm:px-20"
+              className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center px-0 md:px-20 "
             >
               <ImageTapNavigation
                 currentIndex={currentIndex}
@@ -223,7 +223,7 @@ export default function Lightbox({
                 alt="Enlarged gallery photo"
                 width={photos[currentIndex].width}
                 height={photos[currentIndex].height}
-                className="object-contain w-full h-full max-h-[80vh]"
+                className="object-contain w-full h-full max-h-[80vh] "
                 onClick={(e) => e.stopPropagation()}
                 unoptimized
                 priority
