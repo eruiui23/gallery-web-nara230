@@ -4,72 +4,12 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
 import localfont from "next/font/local"
+import { carouselData } from '@/lib/galleryData'
 
 const gothamBold = localfont({
     src: '../public/fonts/GothamBold.otf',
 })
 
-const galleryData = [
-    {
-        id: 1,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751960002/DSCF5566_ndu7yj.jpg",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-        preload: true
-    },
-    {
-        id: 2,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751959941/DSCF5988_u4hrb3.png",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-        preload: true
-    },
-    {
-        id: 3,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751959516/DSCF9719_q2qjbk.jpg",
-        alt: "Street photography in Tokyo",
-        title: "Tokyo Drift",
-        category: "Street",
-    },
-    {
-        id: 4,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1751959517/DSCF4239_ukkxqn.jpg",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-    },
-    {
-        id: 5,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1774258126/R0011276_web_hm9yy5.jpg",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-    },
-    {
-        id: 6,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1774258114/R0011267_web_ggv9pu.jpg",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-    },
-    {
-        id: 7,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1774258113/R0010561-2_web_qycdo5.jpg",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-    },
-    {
-        id: 8,
-        src: "https://res.cloudinary.com/dgvu6ny5a/image/upload/v1774258113/R0011374_web_o9s3dw.jpg",
-        alt: "Portrait of a person",
-        title: "Shadows",
-        category: "Portrait",
-        preload: true
-    },
-];
 
 const delay = 4000
 
@@ -147,7 +87,7 @@ export function EmblaCarousel() {
       <div className="embla relative w-full">
           <div className="embla__viewport overflow-hidden w-full" ref={emblaRef}>
               <div className="embla__container flex w-full">
-                {galleryData.map((photo) => (
+                {carouselData.map((photo) => (
                   <div className="embla__slide min-w-full shrink-0 relative" key={photo.id}>
                     <FadeInImage
                       src={photo.src}
