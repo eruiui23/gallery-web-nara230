@@ -25,7 +25,7 @@ export default function Home() {
           <EmblaCarousel/>
         </div>
       </div>
-      <div className="flex w-7/8 flex-col m-auto">
+      <div className="flex w-full flex-col m-auto">
         <HomeTabs tabs={myTabs} />
       </div>
       {/*<ImageWall folderName="Nara230/Gallery/Uprak" />*/}
