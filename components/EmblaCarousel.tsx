@@ -46,39 +46,13 @@ export function EmblaCarousel() {
             stopOnInteraction: true,
         })],
     )
-    const [progress, setProgress] = useState(0)
-
-    useEffect(() => {
-        let interval: NodeJS.Timeout
-
-        const onSelect = () => {
-            setProgress(0) // Reset progress on slide change
-        }
-
-        if (emblaApi) {
-            emblaApi.on('select', onSelect)
-
-            interval = setInterval(() => {
-                setProgress(prev => {
-                    if (prev >= 100) return 0
-                    return prev + (100 / (delay / 50)) // Increment based on delay
-                })
-            }, 50)
-        }
-
-        return () => {
-            clearInterval(interval)
-            emblaApi?.off('select', onSelect)
-        }
-    }, [emblaApi])
-
     const scrollPrev = () => {
         emblaApi?.scrollPrev()
-        emblaApi?.plugins().autoplay.reset() // Reset timer
+        emblaApi?.plugins().autoplay.reset()
     }
     const scrollNext = () => {
         emblaApi?.scrollNext()
-        emblaApi?.plugins().autoplay.reset() // Reset timer
+        emblaApi?.plugins().autoplay.reset()
     }
 
     const buttonStyles = "font-thin absolute top-1/2 -translate-y-1/2 bg-transparent hover:bg-black/0 text-white/80 hover:text-white/0 text-4xl px-5 py-4 cursor-pointer transition-colors duration-300 z-10 h-full w-3/7"
@@ -100,8 +74,8 @@ export function EmblaCarousel() {
           </div>
 
           {/* Navigation buttons... */}
-          <button tabIndex={-1} className={`${buttonStyles} ${gothamBold.className} left-0 `} onClick={scrollPrev}></button>
-          <button tabIndex={-1} className={`${buttonStyles} ${gothamBold.className} right-0`} onClick={scrollNext}></button>
+          <button tabIndex={-1} className={`${buttonStyles} ${gothamBold.className} hidden md:block left-0 `} onClick={scrollPrev}></button>
+          <button tabIndex={-1} className={`${buttonStyles} ${gothamBold.className} hidden md:block right-0`} onClick={scrollNext}></button>
       </div>
     )
 }
