@@ -211,7 +211,7 @@ export default function Lightbox({
                 transition: { duration: 0.4, ease: "easeOut" },
               }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="absolute w-full h-full max-w-7xl max-h-[90vh] mx-10 md:mx-20 flex items-center justify-center px-0 md:px-20 "
+              className="absolute w-full h-full max-w-7xl max-h-[80vh] mx-10 md:mx-20 flex items-center justify-center px-0 md:px-20"
             >
               <ImageTapNavigation
                 currentIndex={currentIndex}
@@ -223,7 +223,7 @@ export default function Lightbox({
                 alt="Enlarged gallery photo"
                 width={photos[currentIndex].width}
                 height={photos[currentIndex].height}
-                className="object-contain w-full h-full max-h-[80vh] "
+                className="object-contain w-auto h-auto max-w-full max-h-[80vh]"
                 onClick={(e) => e.stopPropagation()}
                 unoptimized
                 priority
