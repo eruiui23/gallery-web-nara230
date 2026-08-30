@@ -11,23 +11,22 @@ const myTabs = [
   {
     id: "memories",
     label: "Memories",
-    content: (
-      <ImageWall key="classmeet" folderName="Nara230/Memories" />
-    ),
+    content: <ImageWall key="classmeet" folderName="Nara230/Memories" />,
   },
 ];
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 justify-center items-center">
       <div className="min-h-screen flex flex-col justify-between py-20">
         <div className="flex flex-1 items-center justify-center overflow-hidden">
-          <EmblaCarousel/>
+          <EmblaCarousel />
         </div>
       </div>
-
-      <div className="flex flex-col m-auto">
-        <HomeTabs tabs={myTabs} />
+      <div className="flex justify-center mx-auto w-full max-w-450">
+        <div className="flex flex-col w-full m-auto">
+          <HomeTabs tabs={myTabs} />
+        </div>
       </div>
       {/*<ImageWall folderName="Nara230/Gallery/Uprak" />*/}
     </div>

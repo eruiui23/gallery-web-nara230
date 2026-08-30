@@ -146,7 +146,7 @@ export default function GalleryGrid({
   );
 
   return (
-    <main className="max-w-350 ">
+    <main className="max-w-450 ">
       {/* mobile */}
       <div className="flex md:hidden gap-5">{mobileCol.map(mapImageMobile)}</div>
 
