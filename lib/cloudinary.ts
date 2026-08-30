@@ -36,7 +36,7 @@ export async function getImagesFromFolder(
   try {
     let query = cloudinary.search
       .expression(`folder:"${folderName}"`)
-      .sort_by("public_id", "asc")
+      .sort_by("display_name", "asc")
       .max_results(25);
 
     if (cursor) {
