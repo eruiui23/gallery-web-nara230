@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <header className={`${gothamBold.className} header-scrolled`}>
-      <nav className={`md:mx-8 w-full z-100 duration-500 ease-out py-0`}>
+      <nav className={`md:mx-8 w-full z-100 duration-500 ease-out ${scrolled ? "py-0" : "py-4"}`}>
         <div className="max-w-450 mx-auto px-6 flex justify-between items-center">
           <ul className="flex flex-row items-center justify-between">
             {/* Brand / Logo */}
