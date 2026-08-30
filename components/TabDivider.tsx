@@ -11,7 +11,7 @@ type Props = {
 export default function TabDivider({ tabs, activeTab, onTabChange }: Props) {
   return (
     <>
-      <div className="divider divider-primary md:divider-start text-sm sm:text-base uppercase font-[Arial] text-primary ">
+      <div className="divider divider-primary md:divider-start text-sm sm:text-base uppercase font-[Arial] text-primary mx-5">
         {tabs.map((tab, tabIdx) => {
           return (
             <div key={tab.id} className="inline-flex items-center">
