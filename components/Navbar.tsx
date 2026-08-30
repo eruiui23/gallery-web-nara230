@@ -1,5 +1,4 @@
 "use client";
-
 import { AnimatePresence, motion } from "motion/react";
 import { useState, useEffect } from "react";
 import localfont from "next/font/local";
@@ -7,6 +6,8 @@ import Link from "next/link";
 
 const gothamBold = localfont({
   src: "../public/fonts/GothamBold.otf",
+  display: "swap",
+  fallback: ['Helvetica', 'Arial', 'sans-serif'],
 });
 
 export default function Navbar() {
@@ -28,7 +29,7 @@ export default function Navbar() {
         <div className="max-w-450 mx-auto px-6 flex justify-between items-center">
           <ul className="flex flex-row items-center justify-between">
             {/* Brand / Logo */}
-            <li className="HomeButton z-50">
+            <li className="HomeButton z-50 text-3xl">
               <Link href="/" onClick={closeMenu}>
                 <span className="nara">nara</span>230
               </Link>
