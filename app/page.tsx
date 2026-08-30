@@ -20,7 +20,7 @@ const myTabs = [
 export default function Home() {
   return (
     <div className="flex flex-col gap-5">
-      <div className="h-screen flex flex-col justify-between py-20">
+      <div className="min-h-screen flex flex-col justify-between py-20">
         <div className="flex flex-1 items-center justify-center overflow-hidden">
           <EmblaCarousel/>
         </div>
