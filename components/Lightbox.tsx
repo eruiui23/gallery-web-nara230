@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { Photo } from "@/lib/cloudinary";
@@ -24,12 +24,6 @@ type LeftArrowProps = {
 
 type RightArrowProps = {
   currentIndex: number;
-  onNavigate: (newIndex: number) => void;
-  totalPhotos: number;
-};
-
-type ImageTapNavigationProps = {
-  currentIndex: number | null;
   onNavigate: (newIndex: number) => void;
   totalPhotos: number;
 };
@@ -115,41 +109,17 @@ function RightArrow({ currentIndex, onNavigate, totalPhotos }: RightArrowProps) 
   );
 }
 
-function ImageTapNavigation({
-  currentIndex,
-  onNavigate,
-  totalPhotos,
-}: ImageTapNavigationProps) {
-  if (currentIndex === null) return null;
-
-  return (
-    <div className="block md:hidden">
-      {/* Left Invisible Touch Area (Previous) */}
-      {currentIndex > 0 && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onNavigate(currentIndex - 1);
-          }}
-          className="absolute inset-y-0 left-0 w-1/4 z-40 outline-none cursor-pointer"
-          aria-label="Previous photo"
-        />
-      )}
-
-      {/* Right Invisible Touch Area (Next) */}
-      {currentIndex < totalPhotos - 1 && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onNavigate(currentIndex + 1);
-          }}
-          className="absolute inset-y-0 right-0 w-3/4 z-40 outline-none cursor-pointer"
-          aria-label="Next photo"
-        />
-      )}
-    </div>
-  );
-}
+// Custom variants to handle Desktop (Fade) vs Mobile (Slide)
+const slideVariants = {
+  enter: ({ direction, isMobile }: { direction: number; isMobile: boolean }) => ({
+    x: isMobile ? (direction > 0 ? "100%" : "-100%") : 0,
+    opacity: 0,
+  }),
+  exit: ({ direction, isMobile }: { direction: number; isMobile: boolean }) => ({
+    x: isMobile ? (direction < 0 ? "100%" : "-100%") : 0,
+    opacity: 0,
+  }),
+};
 
 export default function Lightbox({
   photos,
@@ -159,12 +129,39 @@ export default function Lightbox({
 }: LightBoxProps) {
   const [loadedImages, setLoadedImages] = useState<number[]>([]);
 
+  const [direction, setDirection] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(currentIndex);
+
+  // Track if screen is mobile for animations
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Swipe detection refs
+  const touchStartX = useRef<number | null>(null);
+  const hasSwiped = useRef<boolean>(false);
+
+  // 1. Device Size Checker
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); // Run once on mount
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // 2. Direction Tracker
+  if (currentIndex !== prevIndex) {
+    setPrevIndex(currentIndex);
+    if (currentIndex !== null && prevIndex !== null) {
+      setDirection(currentIndex > prevIndex ? 1 : -1);
+    }
+  }
+
   useEffect(() => {
     if (currentIndex === null) {
       document.body.style.overflow = "auto";
       return;
     }
     document.body.style.overflow = "hidden";
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft" && currentIndex > 0) {
@@ -176,12 +173,34 @@ export default function Lightbox({
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       document.body.style.overflow = "auto";
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentIndex, photos.length, onClose, onNavigate]);
+
+  // 3. Touch Gesture Handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    hasSwiped.current = false; // Reset swipe lock
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || hasSwiped.current || currentIndex === null) return;
+
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - touchStartX.current;
+    const px = 30
+
+    // Trigger instantly if swiped 50px left or right
+    if (diff < -px && currentIndex < photos.length - 1) {
+      onNavigate(currentIndex + 1);
+      hasSwiped.current = true; // Lock so it doesn't trigger 100 times during one swipe
+    } else if (diff > px && currentIndex > 0) {
+      onNavigate(currentIndex - 1);
+      hasSwiped.current = true;
+    }
+  };
 
   if (typeof document === "undefined") return null;
 
@@ -195,29 +214,29 @@ export default function Lightbox({
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[99999] bg-black flex items-center justify-center"
           onClick={onClose}
+
+          // Apply touch listeners to the entire background wrapper
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
         >
-          {/*buttons*/}
           <CloseButton onClose={onClose} />
           <LeftArrow currentIndex={currentIndex} onNavigate={onNavigate} />
           <RightArrow currentIndex={currentIndex} onNavigate={onNavigate} totalPhotos={photos.length} />
 
-          <AnimatePresence>
+          <AnimatePresence custom={{ direction, isMobile }}>
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: loadedImages.includes(currentIndex) ? 1 : 0 }}
-              exit={{
-                opacity: 0,
-                transition: { duration: 0.4, ease: "easeOut" },
+              custom={{ direction, isMobile }}
+              variants={slideVariants}
+              initial="enter"
+              animate={{
+                x: 0,
+                opacity: loadedImages.includes(currentIndex) ? 1 : 0
               }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              exit="exit"
+              transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
               className="absolute w-full h-full max-w-7xl max-h-[80vh] mx-10 md:mx-20 flex items-center justify-center px-0 md:px-20"
             >
-              <ImageTapNavigation
-                currentIndex={currentIndex}
-                onNavigate={onNavigate}
-                totalPhotos={photos.length}
-              />
               <Image
                 src={photos[currentIndex].src}
                 alt="Enlarged gallery photo"
